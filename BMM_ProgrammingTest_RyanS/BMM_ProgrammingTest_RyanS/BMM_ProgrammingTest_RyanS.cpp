@@ -1,13 +1,29 @@
 // BMM_ProgrammingTest_RyanS.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include <iostream>
+#include "PickerGame.h"
 
 int main()
 {
+    PickerGame pGame = PickerGame();
+
+    pGame.ShufflePrizePool();
+
+    std::cout << "Welcome to the Picker Game!!" << '\n' << '\n';
+
+    std::cout << "You will be presented with " << pGame.GetPrizePool().size() << " hidden and randomized prizes." << '\n' << '\n';
+
+    std::cout << "You will start with 3 picks and can pick until you run out of picks or pick the stopper." << '\n' << '\n';
+
+    std::cout << "You can win free games, credit and extra picks to be used in the same game." << '\n' << '\n';
+
     bool gameRunning = true;
+    while(gameRunning)
+    {
+        pGame.Update();
 
-
+        gameRunning = false;
+    }
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

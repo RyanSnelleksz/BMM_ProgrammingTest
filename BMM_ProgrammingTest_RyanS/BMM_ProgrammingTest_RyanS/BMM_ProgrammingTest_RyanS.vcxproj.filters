@@ -18,6 +18,9 @@
     <ClCompile Include="BMM_ProgrammingTest_RyanS.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PickerGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PickerGame.h">

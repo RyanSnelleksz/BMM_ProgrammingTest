@@ -2,6 +2,8 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
+#include <random>
 
 using namespace std;
 
@@ -42,9 +44,30 @@ public:
         prizePool.push_back(Prize("Blank", 0));
         prizePool.push_back(Prize("Stopper", 0));
     }
+
     PickerGame(vector<Prize> prizes) // Initialize a game with a custom prize pool
     {
         prizePool = prizes;
     }
 
+    void Update();
+
+    void printPrizePool()
+    {
+        for (Prize p : prizePool)
+        {
+            std::cout << p.type << ": " << p.value << std::endl;
+        }
+    }
+
+    const vector<Prize>& GetPrizePool()
+    {
+        return prizePool;
+    }
+
+    int GetValidInput();
+
+    int Random(int num);
+
+    void ShufflePrizePool();
 };

@@ -17,12 +17,9 @@ int main()
 
     std::cout << "You can win free games, credit and extra picks to be used in the same game." << '\n' << '\n';
 
-    bool gameRunning = true;
-    while(gameRunning)
+    while(!pGame.gameComplete)
     {
         pGame.Update();
-
-        gameRunning = false;
     }
 }
 

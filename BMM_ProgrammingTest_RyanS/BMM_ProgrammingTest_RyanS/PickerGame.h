@@ -23,8 +23,12 @@ class PickerGame
 {
 
     vector<Prize> prizePool;
+    int picks = 3;
+    int credit = 0;
 
 public:
+
+    bool gameComplete = false;
 
     PickerGame() // Initialize a game with the default prize pool
     {
@@ -67,7 +71,9 @@ public:
 
     int GetValidInput();
 
-    int Random(int num);
+    int Random(int num); // Generates Random Nums between 1 and num
 
-    void ShufflePrizePool();
+    void ShufflePrizePool(); // Shuffles the prize pool
+
+    void ResolvePick(Prize pick); // Checks the players pick and resolves based on it
 };

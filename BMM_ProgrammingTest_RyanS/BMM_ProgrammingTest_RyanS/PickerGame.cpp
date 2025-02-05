@@ -17,14 +17,29 @@ void PickerGame::Update()
 
     pInput = GetValidInput();
 
-    Prize selectedPrize = prizePool[pInput];
-    std::cout << "You have picked: " << selectedPrize.type;
+    Prize selectedPrize = prizePool[pInput - 1]; // Relaying pick to player
+    std::cout << "You have picked: " << selectedPrize.type << " ";
     if (selectedPrize.value != 0)
     {
         std::cout << selectedPrize.value;
     }
     std::cout << '\n' << '\n';;
 
+    ResolvePick(selectedPrize); //Process Pick
+    prizePool.erase(prizePool.begin() + pInput - 1); // -1 since player inputs 1-15 when array is 0-14
+    picks -= 1;
+
+    if (picks == 0)
+    {
+        gameComplete = true;
+        std::cout << "Game Over " << credit << '\n';
+        std::cout << "Credit: " << credit << '\n' << '\n';
+    }
+    else
+    {
+        std::cout << "You have " << picks << " pick/s remaining." << '\n';
+        std::cout << "Credit: " << credit  << '\n' << '\n';
+    }
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -43,13 +58,13 @@ int PickerGame::GetValidInput()
     bool validInput = false;
     while (!validInput)
     {
-        if (!(std::cin >> input)) //failed to read int
+        if (!(std::cin >> input) || input <= 0 || input > prizePool.size()) //failed to read int
         {
             std::cin.clear(); // cleaning up input for retry
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << "Invalid input: Please make enter a number between 1 and " << prizePool.size() << ": " << '\n' << '\n';
         }
-        if (input > 0 && input <= prizePool.size())
+        else
         {
             validInput = true;
         }
@@ -89,10 +104,47 @@ void PickerGame::ShufflePrizePool()
 {
     for (int i = 0; i < prizePool.size(); i++)
     {
-        int randomNum = Random(prizePool.size()) - 1;
+        int randomNum = Random(prizePool.size()) - 1; // - 1 since it generates a num from 1-15 when array is 0-14
         Prize temp = prizePool[i];
 
         prizePool[i] = prizePool[randomNum];
         prizePool[randomNum] = temp;
+    }
+}
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+// ResolvePick
+// 
+// Checks what type of prize they player picked and acts accordingly
+// 
+// Credit: Addes credit to the players credit equal to value of prize
+// ExtraPick: Grants extra picks equal to value of prize
+// Blank: Does nothing
+// Free Game: Gives the player free runs of the game but does nothing in this assessment project
+// Stopper: Ends game
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+void PickerGame::ResolvePick(Prize pick)
+{
+    if (pick.type == "Credit")
+    {
+        std::cout << "+" << pick.value << " Credit" << '\n' << '\n';
+        credit += pick.value;
+    }
+    else if (pick.type == "ExtraPick")
+    {
+        std::cout << "+" << pick.value << " Picks" << '\n' << '\n';
+        picks += pick.value;
+    }
+    else if (pick.type == "Stopper")
+    {
+        std::cout << "Game Over" << '\n' << '\n';
+        std::cout << "Credit: " << credit << '\n';
+        gameComplete = true;
+    }
+    else if (pick.type == "FreeGame")
+    {
+        std::cout << "+" << pick.value << " Free Games" << '\n' << '\n';
     }
 }

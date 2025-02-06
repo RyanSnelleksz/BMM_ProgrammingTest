@@ -18,7 +18,7 @@ void PickerGame::Update()
     pInput = GetValidInput();
 
     Prize selectedPrize = prizePool[pInput - 1]; // Relaying pick to player
-    std::cout << "You have picked: " << selectedPrize.type << " ";
+    std::cout << "You have picked: " << pInput << " - " << selectedPrize.type << " ";
     if (selectedPrize.value != 0)
     {
         std::cout << selectedPrize.value;
@@ -60,14 +60,14 @@ int PickerGame::GetValidInput()
     {
         if (!(std::cin >> input) || input <= 0 || input > prizePool.size()) //failed to read int
         {
-            std::cin.clear(); // cleaning up input for retry
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << "Invalid input: Please make enter a number between 1 and " << prizePool.size() << ": " << '\n' << '\n';
         }
         else
         {
             validInput = true;
         }
+        std::cin.clear(); // cleaning up input for retry
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
     return input;
 }

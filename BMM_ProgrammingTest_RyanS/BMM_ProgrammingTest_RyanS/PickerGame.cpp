@@ -35,8 +35,9 @@ void PickerGame::Update(bool simulate)
     ResolvePick(selectedPrize); //Process Pick
     prizePool.erase(prizePool.begin() + pInput - 1); // -1 since player inputs 1-15 when array is 0-14
     picks -= 1;
+    gameData->picksMade += 1;
 
-    if (gameComplete) // Don't game over twice
+    if (!gameComplete) // Don't game over twice
     {
         if (picks == 0)
         {

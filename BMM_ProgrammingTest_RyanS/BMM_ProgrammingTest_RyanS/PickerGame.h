@@ -4,17 +4,19 @@
 #include <vector>
 #include <iostream>
 #include <random>
+#include <iomanip>
+#include <limits>
 
 using namespace std;
 
 struct Prize
 {
     string type;
-    int value;
+    double value;
 
-    int numWon = 0; // For data collection only
+    double numWon = 0; // For data collection only
 
-    Prize(string t, int v)
+    Prize(string t, double v)
     {
         type = t;
         value = v;
@@ -23,6 +25,8 @@ struct Prize
 
 struct PickGameData
 {
+    int picksMade = 0;
+
     Prize credit500Data = Prize("Credit", 500);
     Prize credit50Data = Prize("Credit", 50);
     Prize freeGame10Data = Prize("FreeGame", 10);
@@ -39,6 +43,8 @@ struct PickGameData
 
     void Add(PickGameData otherGame)
     {
+        picksMade += otherGame.picksMade;
+
         credit500Data.numWon += otherGame.credit500Data.numWon;
         credit50Data.numWon += otherGame.credit50Data.numWon;
         freeGame10Data.numWon += otherGame.freeGame10Data.numWon;

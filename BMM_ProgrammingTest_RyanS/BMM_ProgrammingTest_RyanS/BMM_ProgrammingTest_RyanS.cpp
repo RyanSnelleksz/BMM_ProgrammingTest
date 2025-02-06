@@ -87,7 +87,8 @@ int main()
         }
         gameTotals.Add(*pGameData);
     }
-    OutputAveragesAndProbability(gameTotals, (double)simulationCount);
+    //OutputAveragesAndProbability(gameTotals, (double)simulationCount);
+    std::getchar();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

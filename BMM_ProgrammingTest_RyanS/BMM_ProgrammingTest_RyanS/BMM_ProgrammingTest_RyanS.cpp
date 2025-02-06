@@ -72,7 +72,7 @@ int main()
 {
     PickGameData gameTotals = PickGameData();
 
-    int simulationCount = 100000; // How many games we want to simulate << If you want to play manually set to 1 so it doesnt keep going
+    int simulationCount = 1; // How many games we want to simulate << If you want to play manually set to 1 so it doesnt keep going
     for (int i = 0; i < simulationCount; i++)
     {
         PickGameData* pGameData = new PickGameData(); // delete called in pGame destructor
@@ -83,7 +83,7 @@ int main()
 
         while (!pGame.gameComplete)
         {
-            pGame.Update(true); // True means simulating, put false if you want to play yourself
+            pGame.Update(false); // True means simulating, put false if you want to play yourself
         }
         gameTotals.Add(*pGameData);
     }

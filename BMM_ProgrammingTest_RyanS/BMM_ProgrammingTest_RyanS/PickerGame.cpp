@@ -17,7 +17,7 @@ void PickerGame::Update(bool simulate)
 
     if (simulate)
     {
-        pInput = Random(prizePool.size());
+        pInput = Random((int)prizePool.size());
     }
     else
     {
@@ -36,16 +36,19 @@ void PickerGame::Update(bool simulate)
     prizePool.erase(prizePool.begin() + pInput - 1); // -1 since player inputs 1-15 when array is 0-14
     picks -= 1;
 
-    if (picks == 0)
+    if (gameComplete) // Don't game over twice
     {
-        gameComplete = true;
-        std::cout << "Game Over " << credit << '\n';
-        std::cout << "Credit: " << credit << '\n' << '\n';
-    }
-    else
-    {
-        std::cout << "You have " << picks << " pick/s remaining." << '\n';
-        std::cout << "Credit: " << credit  << '\n' << '\n';
+        if (picks == 0)
+        {
+            gameComplete = true;
+            std::cout << "Game Over " << credit << '\n';
+            std::cout << "Credit: " << credit << '\n' << '\n';
+        }
+        else
+        {
+            std::cout << "You have " << picks << " pick/s remaining." << '\n';
+            std::cout << "Credit: " << credit << '\n' << '\n';
+        }
     }
 }
 
@@ -111,7 +114,7 @@ void PickerGame::ShufflePrizePool()
 {
     for (int i = 0; i < prizePool.size(); i++)
     {
-        int randomNum = Random(prizePool.size()) - 1; // - 1 since it generates a num from 1-15 when array is 0-14
+        int randomNum = Random((int)prizePool.size()) - 1; // - 1 since it generates a num from 1-15 when array is 0-14
         Prize temp = prizePool[i];
 
         prizePool[i] = prizePool[randomNum];
@@ -138,20 +141,57 @@ void PickerGame::ResolvePick(Prize pick)
     {
         std::cout << "+" << pick.value << " Credit" << '\n' << '\n';
         credit += pick.value;
+
+        if (gameData->credit500Data.value == pick.value) // Collecting Data
+        {
+            gameData->credit500Data.numWon += 1;
+        }
+        else if (gameData->credit50Data.value == pick.value)
+        {
+            gameData->credit50Data.numWon += 1;
+        }
     }
     else if (pick.type == "ExtraPick")
     {
         std::cout << "+" << pick.value << " Picks" << '\n' << '\n';
         picks += pick.value;
+
+        if (gameData->extraPick2Data.value == pick.value) // Collecting Data
+        {
+            gameData->extraPick2Data.numWon += 1;
+        }
+        else if (gameData->extraPickData.value == pick.value)
+        {
+            gameData->extraPickData.numWon += 1;
+        }
     }
     else if (pick.type == "Stopper")
     {
         std::cout << "Game Over" << '\n' << '\n';
         std::cout << "Credit: " << credit << '\n';
+
+        gameData->stopperData.numWon += 1; // Collecting Data
+
         gameComplete = true;
     }
     else if (pick.type == "FreeGame")
     {
         std::cout << "+" << pick.value << " Free Games" << '\n' << '\n';
+
+        if (gameData->freeGame10Data.value == pick.value) // Collecting Data
+        {
+            gameData->freeGame10Data.numWon += 1;
+        }
+        else if (gameData->freeGame5Data.value == pick.value)
+        {
+            gameData->freeGame5Data.numWon += 1;
+        }
+    }
+    else
+    {
+        if (gameData->blankData.type == pick.type) // Collecting Data
+        {
+            gameData->blankData.numWon += 1;
+        }
     }
 }

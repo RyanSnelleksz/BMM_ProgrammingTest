@@ -5,21 +5,22 @@
 
 int main()
 {
-    // Setting up and Introducing Game
+    PickGameData gameTotals = PickGameData();
 
-    PickerGame pGame = PickerGame();
-
-    std::cout << "Welcome to the Picker Game!!" << '\n' << '\n';
-
-    std::cout << "You will be presented with " << pGame.GetPrizePool().size() << " hidden and randomized prizes." << '\n' << '\n';
-
-    std::cout << "You will start with 3 picks and can pick until you run out of picks or pick the stopper." << '\n' << '\n';
-
-    std::cout << "You can win free games, credit and extra picks to be used in the same game." << '\n' << '\n';
-
-    while(!pGame.gameComplete)
+    int simulationCount = 2; // How many games we want to simulate << If you want to play manually set to 1 so it doesnt keep going
+    for (int i = 0; i < simulationCount; i++)
     {
-        pGame.Update(true);
+        PickGameData* pGameData = new PickGameData(); // delete called in pGame destructor
+
+        // Setting up and Introducing Game
+        PickerGame pGame = PickerGame(pGameData);
+        pGame.gameIntro();
+
+        while (!pGame.gameComplete)
+        {
+            pGame.Update(true); // True means simulating, put false if you want to play yourself
+        }
+        gameTotals.Add(*pGameData);
     }
 }
 

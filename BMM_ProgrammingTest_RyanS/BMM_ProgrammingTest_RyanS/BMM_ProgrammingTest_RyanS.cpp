@@ -5,9 +5,9 @@
 
 int main()
 {
-    PickerGame pGame = PickerGame();
+    // Setting up and Introducing Game
 
-    pGame.ShufflePrizePool();
+    PickerGame pGame = PickerGame();
 
     std::cout << "Welcome to the Picker Game!!" << '\n' << '\n';
 
@@ -19,7 +19,7 @@ int main()
 
     while(!pGame.gameComplete)
     {
-        pGame.Update();
+        pGame.Update(true);
     }
 }
 

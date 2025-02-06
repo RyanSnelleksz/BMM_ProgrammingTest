@@ -47,14 +47,18 @@ public:
         prizePool.push_back(Prize("Blank", 0));
         prizePool.push_back(Prize("Blank", 0));
         prizePool.push_back(Prize("Stopper", 0));
+
+        ShufflePrizePool();
     }
 
     PickerGame(vector<Prize> prizes) // Initialize a game with a custom prize pool
     {
         prizePool = prizes;
+
+        ShufflePrizePool();
     }
 
-    void Update();
+    void Update(bool simulate);
 
     void printPrizePool()
     {

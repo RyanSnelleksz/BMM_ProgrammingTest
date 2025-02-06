@@ -9,13 +9,20 @@
 // functionality of the game will take place.
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-void PickerGame::Update()
+void PickerGame::Update(bool simulate)
 {
     int pInput; // player input
 
     std::cout << "Please make your pick; Enter a number between 1 and " << prizePool.size() << ": " << '\n' << '\n';
 
-    pInput = GetValidInput();
+    if (simulate)
+    {
+        pInput = Random(prizePool.size());
+    }
+    else
+    {
+        pInput = GetValidInput();
+    }
 
     Prize selectedPrize = prizePool[pInput - 1]; // Relaying pick to player
     std::cout << "You have picked: " << pInput << " - " << selectedPrize.type << " ";
